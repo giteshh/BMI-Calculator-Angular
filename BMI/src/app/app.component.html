@@ -10,21 +10,30 @@ width: 600px; margin: 0 auto;box-shadow: 6cm; border-radius: 10px; margin-top: 8
       <div class="input-group">
         <input type="number" class="form-control" placeholder="Enter your weight here"
         formControlName="weight">
-        <select>
+        <select class="btn btn-primary">
           <option>Kilogram</option>
           <option>Pound</option>
         </select>
+      </div>
+      <div *ngIf="bmiForm.controls['weight'].invalid && bmiForm.controls['weight'].touched" class="text-danger">
+        <div *ngIf="bmiForm.controls['weight'].invalid">
+        Weight is required.
+      </div>
       </div>
       <label for="">Enter your Height</label>
       <div class="input-group">
         <input type="number" class="form-control" placeholder="Enter your Height here"
         formControlName="height">
-        <select class="button">
+        <select class="btn btn-warning">
           <option>Centimeters</option>
           <option>Feet</option>
         </select>
       </div>
-
+      <div *ngIf="bmiForm.controls['height'].invalid && bmiForm.controls['height'].touched" class="text-danger">
+        <div *ngIf="bmiForm.controls['height'].invalid">
+        Height is required.
+      </div>
+      </div>
       <button type="submit" class="btn btn-info" [disabled]="!bmiForm.valid">Compute BMI</button>
     </form>
 <!-- input form end -->

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +14,17 @@ export class AppComponent {
   finalHeight = 0;
   result = "";
 
+
   bmiForm = new FormGroup({
-    weight: new FormControl(''),
-    height: new FormControl(''),
+    weight: new FormControl('', Validators.required),
+    height: new FormControl('', Validators.required),
   });
 
   computeBMI(){
-    console.log(this.bmiForm.value);
     // converting input height from cm to m
      this.finalHeight = this.bmiForm.value.height / 100;
     //  formula for calculating BMI (with kg and m)
     this.BMI = this.bmiForm.value.weight / (this.finalHeight * this.finalHeight);
-    console.log(this.BMI);
     // call to show result of BMI categories
     this.showBmiCategories();
   }
