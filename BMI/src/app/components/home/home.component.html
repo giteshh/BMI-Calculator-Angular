@@ -1,0 +1,84 @@
+<!-- card start -->
+<div class="card" style="border: 1px solid black; height: 610px;
+width: 610px; margin: 0 auto; border-radius: 10px; margin-top: 80px;">
+  <div class="card-header text-center font-weight-bold">
+    <h1>Want to know your B.M.I.</h1>
+  </div>
+  <!-- input form start -->
+  <form [formGroup]="bmiForm" (ngSubmit)="computeBMI()">
+    <label class="formLabel" for="name">Enter your First Name</label>
+    <div class="input-group">
+      <input class="form-control" placeholder="Enter your first name here"
+             formControlName="name">
+    </div>
+    <div *ngIf="bmiForm.controls['name'].invalid && bmiForm.controls['name'].touched" class="text-danger">
+      <div *ngIf="bmiForm.controls['name'].invalid">
+        Name is required !
+      </div>
+    </div>
+    <label class="formLabel" for="weight">Enter your Weight</label>
+    <div class="input-group">
+      <input type="number" class="form-control" placeholder="Enter your weight here"
+             formControlName="weight">
+      <div class="input-group-append">
+        <span class="input-group-text bg-info text-light">Kg</span>
+      </div>
+    </div>
+    <div *ngIf="bmiForm.controls['weight'].invalid && bmiForm.controls['weight'].touched" class="text-danger">
+      <div *ngIf="bmiForm.controls['weight'].invalid">
+        Weight is required !
+      </div>
+    </div>
+    <label class="formLabel" for="height">Enter your Height</label>
+    <div class="input-group">
+      <input type="number" class="form-control" placeholder="Enter your Height here"
+             formControlName="height">
+      <div class="input-group-append">
+        <span class="input-group-text bg-info text-light">Cm</span>
+      </div>
+    </div>
+    <div *ngIf="bmiForm.controls['height'].invalid && bmiForm.controls['height'].touched" class="text-danger">
+      <div *ngIf="bmiForm.controls['height'].invalid">
+        Height is required !
+      </div>
+    </div>
+    <button type="submit" id="submitButton" class="btn btn-primary" [disabled]="!bmiForm.valid">Compute BMI</button>
+  </form>
+  <!-- input form end -->
+
+  <!-- show BMI value and BMI category -->
+  <div class="result" *ngIf="bmiForm.valid">
+    <h5>
+      {{this.bmiPrefix}} {{this.BMI |  number : '1.2-2'}} {{this.BmiUnit}}
+    </h5>
+
+    <!--    control statement for text-color for result-->
+    <h6 *ngIf="this.result === 'Your BMI is - Underweight.'" class="text-danger">
+      {{this.namePrefix}} {{this.bmiForm.value.name}}, {{ this.result}}
+    </h6>
+    <h6 *ngIf="this.result === 'Your BMI is - Normal Weight.'" class="text-success">
+      {{this.namePrefix}} {{this.bmiForm.value.name}}, {{ this.result}}
+    </h6>
+    <h6 *ngIf="this.result === 'Your BMI is - Overweight.'" class="text-danger">
+      {{this.namePrefix}} {{this.bmiForm.value.name}}, {{ this.result}}
+    </h6>
+    <h6 *ngIf="this.result === 'Your BMI is - Obesity.'" class="text-danger">
+      {{this.namePrefix}} {{this.bmiForm.value.name}}, {{ this.result}}
+    </h6>
+    <hr>
+    <div>
+      <p>
+        {{this.normalWeight}}
+        <br>
+        {{this.weightSuggestion}}
+        {{this.minNormalWeight | number : '1.2-2'}} {{this.weightUnit}} to
+        {{this.maxNormalWeight | number : '1.2-2'}} {{this.weightUnit}}.
+        for {{this.bmiForm.value.height}} cm height.
+      </p>
+    </div>
+  </div>
+  <!-- end of show BMI value and BMI category -->
+</div>
+<!-- card end -->
+
+
