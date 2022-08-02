@@ -11,7 +11,7 @@
   padding-bottom: 20px;
   width: 610px;
   margin: 0 auto;
-  border-radius: 15px;
+  border-radius: 5px;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
@@ -22,12 +22,12 @@
 
 .formLabel {
   padding: 8px 30px 0 30px;
-  color: white;
 }
 
 .invalid-warning {
   padding: 0 0 0 30px;
 }
+
 
 #submitButton {
   text-align: center;
@@ -57,6 +57,27 @@
 #inputBorderRadius {
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
+}
+
+@media only screen and (max-width: 600px) {
+  .main{
+    overflow: hidden;
+  }
+  .card {
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    /*margin: 0 auto;*/
+  }
+  #mediaHeading {
+    font-size: 28px;
+  }
+}
+@media only screen and (max-device-width: 320px)
+and (max-device-height: 600px) {
+  #mediaHeading {
+    font-size: 24px;
+  }
 }
 
 
