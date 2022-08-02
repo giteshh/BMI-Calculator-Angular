@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  // for firebase hosting
   firebase: {
     projectId: 'bmi-cal-culator',
     appId: '1:997487488385:web:f26749002640e532244c80',
