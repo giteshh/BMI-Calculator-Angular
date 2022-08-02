@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -30,10 +30,10 @@ export class HomeComponent {
   }
 
   // form init and validation
-  bmiForm = new FormGroup({
-    name: new FormControl('Gitesh', Validators.required),
-    weight: new FormControl('', Validators.required),
-    height: new FormControl('', Validators.required)
+  bmiForm = new UntypedFormGroup({
+    name: new UntypedFormControl('Gitesh', Validators.required),
+    weight: new UntypedFormControl('', Validators.required),
+    height: new UntypedFormControl('', Validators.required)
   });
   feet: number | undefined;
   inch: number | undefined;
