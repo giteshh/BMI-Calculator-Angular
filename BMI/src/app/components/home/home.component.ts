@@ -12,10 +12,7 @@ export class HomeComponent {
   height = 0;
   weight = 0;
   BMI = 0;
-  imperialBMI = 0;
   finalHeight = 0;    // converts height in meters
-  heightInFt: number | null = 0;
-  heightInInchh = 0;
   result = "";
   minNormalWeight = 0;
   maxNormalWeight = 0;
