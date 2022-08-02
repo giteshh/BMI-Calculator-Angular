@@ -1,6 +1,6 @@
-<div class="main">
+<div class="main bg-dark">
   <!-- card start -->
-  <div class="card">
+  <div class="card bg-dark">
     <div class="card-header text-center font-weight-bold text-info">
       <h1>Want to know your B.M.I.</h1>
     </div>
@@ -15,7 +15,7 @@
       <form [formGroup]="bmiForm" (ngSubmit)="computeBMI()">
         <label class="formLabel" for="name">Enter your First Name</label>
         <div class="input-group">
-          <input class="form-control" placeholder="Enter your first name here"
+          <input class="form-control bg-dark" placeholder="Enter your first name here"
                  formControlName="name">
         </div>
         <div *ngIf="bmiForm.controls['name'].invalid && bmiForm.controls['name'].touched" class="text-danger">
@@ -25,7 +25,7 @@
         </div>
         <label class="formLabel" for="weight">Enter your Weight</label>
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your weight here"
+          <input type="number" class="form-control bg-dark" placeholder="Enter your weight here"
                  formControlName="weight">
           <div class="input-group-append">
             <span class="input-group-text bg-info text-light">Kg</span>
@@ -38,7 +38,7 @@
         </div>
         <label class="formLabel" for="height">Enter your Height</label>
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your Height here"
+          <input type="number" class="form-control bg-dark" placeholder="Enter your Height here"
                  formControlName="height">
           <div class="input-group-append">
             <span class="input-group-text bg-info text-light">Cm</span>

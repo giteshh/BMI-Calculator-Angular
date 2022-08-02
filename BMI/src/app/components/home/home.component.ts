@@ -31,12 +31,10 @@ export class HomeComponent {
 
   // form init and validation
   bmiForm = new UntypedFormGroup({
-    name: new UntypedFormControl('Gitesh', Validators.required),
+    name: new UntypedFormControl('', Validators.required),
     weight: new UntypedFormControl('', Validators.required),
     height: new UntypedFormControl('', Validators.required)
   });
-  feet: number | undefined;
-  inch: number | undefined;
 
   toggleMetricForm() {
     this.showImperialForm = false;
@@ -55,9 +53,8 @@ export class HomeComponent {
       this.BMI = this.bmiForm.value.weight / Math.pow(this.finalHeight, 2);
 
     } else {
-      // this.finalHeight = this.bmiForm.value.heightInFeet * 12 + this.bmiForm.value.heightInInch;
+      //  formula for calculating BMI (with pound and inch)
       this.BMI = (this.bmiForm.value.weight / Math.pow(this.bmiForm.value.height, 2)) * 703;
-
     }
     // call to show result of BMI categories
     this.showBmiCategories();
