@@ -7,6 +7,12 @@
       "hosting": {
         "BMI": [
           "bmi-cal-culator"
+        ],
+        "rewrites": [
+          {
+            "source": "**",
+            "destination": "/index.html"
+          }
         ]
       }
     }
