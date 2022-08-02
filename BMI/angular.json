@@ -107,6 +107,16 @@
               "src/**/*.html"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "BMI:build:production",
+            "firebaseProject": "bmi-cal-culator",
+            "firebaseHostingSite": "bmi-cal-culator"
+          }
         }
       }
     }

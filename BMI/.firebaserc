@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "bmi-cal-culator"
+  },
+  "targets": {
+    "bmi-cal-culator": {
+      "hosting": {
+        "BMI": [
+          "bmi-cal-culator"
+        ]
+      }
+    }
+  }
+}
