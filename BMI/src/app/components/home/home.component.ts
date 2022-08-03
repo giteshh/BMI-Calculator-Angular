@@ -36,9 +36,9 @@ export class HomeComponent {
 
   // form init and validation
   bmiForm = new UntypedFormGroup({
-    name: new UntypedFormControl('git', Validators.required),
-    weight: new UntypedFormControl('50', Validators.required),
-    height: new UntypedFormControl('168', Validators.required)
+    name: new UntypedFormControl('', Validators.required),
+    weight: new UntypedFormControl('', Validators.required),
+    height: new UntypedFormControl('', Validators.required)
   });
 
   toggleMetricForm() {
