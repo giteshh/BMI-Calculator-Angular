@@ -1,4 +1,4 @@
-const lastUpdatedOn = 'Aug 03, 2022 - 12:00 PM IST';
+const lastUpdatedOn = 'Aug 03, 2022- 12:00 PM IST';
 const version = 'v0.0.1';
 
 
