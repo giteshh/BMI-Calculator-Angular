@@ -1,8 +1,8 @@
 <div class="main">
   <!-- card start -->
   <div class="card">
-    <div class="card-header text-center font-weight-bold text-info">
-      <h1 id="mediaHeading">Want to know your B.M.I.</h1>
+    <div class="card-header text-center font-weight-bold">
+      <h1 id="mediaHeading" [style.color]="this.showImperialForm ? '#0d6efd' : '#0097A7'">Want to know your B.M.I.</h1>
     </div>
     <div class="pt-3 pl-4">
       <div class="btn-group">
@@ -25,7 +25,7 @@
         </div>
         <label class="formLabel" for="weight">Enter your Weight</label>
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your weight here"
+          <input type="number" class="form-control" placeholder="Enter your weight in kg"
                  formControlName="weight">
           <div class="input-group-append">
             <span class="input-group-text bg-info text-light">Kg</span>
@@ -38,7 +38,7 @@
         </div>
         <label class="formLabel" for="height">Enter your Height</label>
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your Height here"
+          <input type="number" class="form-control" placeholder="Enter your height in cm"
                  formControlName="height">
           <div class="input-group-append">
             <span class="input-group-text bg-info text-light">Cm</span>
@@ -71,7 +71,7 @@
         </div>
         <label class="formLabel" for="weight">Enter your Weight</label>
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your weight here"
+          <input type="number" class="form-control" placeholder="Enter your weight in pounds"
                  formControlName="weight">
           <div class="input-group-append">
             <span class="input-group-text bg-primary text-light">lbs</span>
@@ -84,7 +84,7 @@
         </div>
         <label class="formLabel" for="height">Enter your Height</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="inputBorderRadius" placeholder="Enter your Height here"
+          <input type="number" class="form-control" id="inputBorderRadius" placeholder="Enter your height in inches"
                  formControlName="height">
           <div class="input-group-append">
             <span class="input-group-text bg-primary text-light">in</span>
@@ -128,18 +128,18 @@
               </h5>
 
               <!--    control statement for text-color for result-->
-              <h6 *ngIf="this.result === 'Your BMI is - Underweight.'" class="text-primary">
+              <h5 *ngIf="this.result === 'Your BMI is - Underweight.'" class="text-primary">
                 {{ this.result}}
-              </h6>
-              <h6 *ngIf="this.result === 'Your BMI is - Normal Weight.'" class="text-success">
+              </h5>
+              <h5 *ngIf="this.result === 'Your BMI is - Normal Weight.'" class="text-success">
                 {{ this.result}}
-              </h6>
-              <h6 *ngIf="this.result === 'Your BMI is - Overweight.'" class="text-warning">
+              </h5>
+              <h5 *ngIf="this.result === 'Your BMI is - Overweight.'" class="text-warning">
                 {{ this.result}}
-              </h6>
-              <h6 *ngIf="this.result === 'Your BMI is - Obesity.'" class="text-danger">
+              </h5>
+              <h5 *ngIf="this.result === 'Your BMI is - Obesity.'" class="text-danger">
                 {{ this.result}}
-              </h6>
+              </h5>
             </div>
             <!-- end of show BMI value and BMI category -->
             <hr>
@@ -160,12 +160,17 @@
             <br>
             <span class="text-warning">Overweight = 25 - 29.9</span>
             <br>
-            <span class="text-danger">Obesity = BMI of 30 or greater</span>
+            <span class="text-danger">Obesity = 30 or greater</span>
           </div>
         </div>
       </div>
     </div>
     <!--    end of modal-->
+    <hr>
+    <div class="text-center text-muted pt-2">
+      App Version: {{version}} |
+      Last Updated On: {{lastUpdatedOn}}
+    </div>
   </div>
   <!-- card end -->
 </div>

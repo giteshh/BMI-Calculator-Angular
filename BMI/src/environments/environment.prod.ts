@@ -1,4 +1,10 @@
+// const lastUpdatedOn = 'Aug 03, 2022 - 12:00 PM IST';
+// const version = 'v0.0.1';
+
+
 export const environment = {
+  // lastUpdatedOn,
+  // version,
   firebase: {
     projectId: 'bmi-cal-culator',
     appId: '1:997487488385:web:f26749002640e532244c80',
