@@ -10,7 +10,7 @@ import {environment} from '../environments/environment';
 import {provideAnalytics, getAnalytics, ScreenTrackingService, UserTrackingService} from '@angular/fire/analytics';
 import {provideFirestore, getFirestore} from '@angular/fire/firestore';
 import {providePerformance, getPerformance} from '@angular/fire/performance';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -22,6 +22,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     AppRoutingModule,
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),

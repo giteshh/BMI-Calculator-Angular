@@ -1,34 +1,22 @@
 <div class="main">
   <!-- card start -->
   <div class="card">
-    <div class="card-header text-center font-weight-bold">
-      <h1 id="mediaHeading" [style.color]="this.showImperialForm ? '#0d6efd' : '#0097A7'">Want to know your B.M.I.</h1>
+    <div class="card-header text-info text-center font-weight-bold p-0">
+      <h1 id="mediaHeading">BMI Calculator</h1>
     </div>
-    <div class="pt-3 pl-4">
-      <div class="btn-group">
-        <button type="button" class="btn btn-sm btn-info" (click)="toggleMetricForm()">Metric</button>
-        <button type="button" class="btn btn-sm btn-primary" (click)="toggleImperialForm()">Imperial</button>
-      </div>
-    </div>
+
     <!-- input form metric start -->
-    <div *ngIf="!this.showImperialForm">
+    <div>
       <form [formGroup]="bmiForm" (ngSubmit)="computeBMI()">
-        <label class="formLabel" for="name">Enter your First Name</label>
+        <label class="formLabel" for="weight">Weight</label>
         <div class="input-group">
-          <input class="form-control" placeholder="Enter your first name here"
-                 formControlName="name">
-        </div>
-        <div *ngIf="bmiForm.controls['name'].invalid && bmiForm.controls['name'].touched" class="text-danger">
-          <div *ngIf="bmiForm.controls['name'].invalid" class="invalid-warning">
-            Name is required !
-          </div>
-        </div>
-        <label class="formLabel" for="weight">Enter your Weight</label>
-        <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your weight in kg"
+          <input type="number" class="form-control" placeholder="Weight"
                  formControlName="weight">
           <div class="input-group-append">
-            <span class="input-group-text bg-info text-light">Kg</span>
+            <select (change)="onWeightTypeChanged($event)" class="form-control bg-info text-light" formControlName="weightType">
+              <option value="kg" [selected]=[0]>kg</option>
+              <option value="lbs">lbs</option>
+            </select>
           </div>
         </div>
         <div *ngIf="bmiForm.controls['weight'].invalid && bmiForm.controls['weight'].touched" class="text-danger">
@@ -36,12 +24,15 @@
             Weight is required !
           </div>
         </div>
-        <label class="formLabel" for="height">Enter your Height</label>
+        <label class="formLabel" for="height">Height</label>
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your height in cm"
+          <input type="number" class="form-control" placeholder="Height"
                  formControlName="height">
           <div class="input-group-append">
-            <span class="input-group-text bg-info text-light">Cm</span>
+            <select (change)="onHeightTypeChanged($event)" class="form-control bg-info text-light" formControlName="heightType">
+              <option value="cm" [selected]=[0]>cm</option>
+              <option value="inch">in</option>
+            </select>
           </div>
         </div>
         <div *ngIf="bmiForm.controls['height'].invalid && bmiForm.controls['height'].touched" class="text-danger">
@@ -56,60 +47,13 @@
     </div>
     <!-- input form metric end -->
 
-    <!-- input form imperial start -->
-    <div *ngIf="this.showImperialForm">
-      <form [formGroup]="bmiForm" (ngSubmit)="computeBMI()">
-        <label class="formLabel" for="name">Enter your First Name</label>
-        <div class="input-group">
-          <input class="form-control" placeholder="Enter your first name here"
-                 formControlName="name">
-        </div>
-        <div *ngIf="bmiForm.controls['name'].invalid && bmiForm.controls['name'].touched" class="text-danger">
-          <div *ngIf="bmiForm.controls['name'].invalid" class="invalid-warning">
-            Name is required !
-          </div>
-        </div>
-        <label class="formLabel" for="weight">Enter your Weight</label>
-        <div class="input-group">
-          <input type="number" class="form-control" placeholder="Enter your weight in pounds"
-                 formControlName="weight">
-          <div class="input-group-append">
-            <span class="input-group-text bg-primary text-light">lbs</span>
-          </div>
-        </div>
-        <div *ngIf="bmiForm.controls['weight'].invalid && bmiForm.controls['weight'].touched" class="text-danger">
-          <div *ngIf="bmiForm.controls['weight'].invalid" class="invalid-warning">
-            Weight is required !
-          </div>
-        </div>
-        <label class="formLabel" for="height">Enter your Height</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="inputBorderRadius" placeholder="Enter your height in inches"
-                 formControlName="height">
-          <div class="input-group-append">
-            <span class="input-group-text bg-primary text-light">in</span>
-          </div>
-        </div>
-        <div *ngIf="bmiForm.controls['height'].invalid && bmiForm.controls['height'].touched"
-             class="text-danger">
-          <div *ngIf="bmiForm.controls['height'].invalid" class="invalid-warning">
-            Height is required !
-          </div>
-        </div>
-        <button type="submit" id="submitButton1" class="btn btn-primary" data-toggle="modal"
-                data-target="#exampleModalCenter" [disabled]="!bmiForm.valid">Compute BMI
-        </button>
-      </form>
-    </div>
-    <!-- input form imperial end -->
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document" data-trigger="focus">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Hey {{bmiForm.value.name}}, here is your BMI</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Hey there, here is your BMI</h5>
             <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close"
                     (click)="resetForm()">
               <span aria-hidden="true" class="text-danger">
@@ -120,10 +64,10 @@
           <div class="modal-body">
             <!-- show BMI value and BMI category -->
             <div class="result" *ngIf="bmiForm.valid">
-              <h5 *ngIf="!this.showImperialForm">
+              <h5>
                 {{this.bmiPrefix}} {{this.BMI |  number : '1.2-2'}} {{this.BmiUnitInMetric}}<sup>2</sup>
               </h5>
-              <h5 *ngIf="this.showImperialForm">
+              <h5>
                 {{this.bmiPrefix}} {{this.BMI |  number : '1.2-2'}} {{this.BmiUnitInImperial}}<sup>2</sup>
               </h5>
 
@@ -167,10 +111,13 @@
     </div>
     <!--    end of modal-->
     <hr>
-    <div class="text-center text-muted pt-2">
-      App Version: {{version}}
-      <br>
-      Last Updated On: {{lastUpdatedOn}}
+    <div class="text-center text-muted" id="footerText">
+      <p id="footerAppVersion">
+        {{version}}
+      </p>
+      <p id="footerLastUpdatedOn">
+        Last Updated On: {{lastUpdatedOn}}
+      </p>
     </div>
   </div>
   <!-- card end -->
