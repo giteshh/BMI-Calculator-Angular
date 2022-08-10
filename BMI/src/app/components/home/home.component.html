@@ -13,7 +13,8 @@
           <input type="number" class="form-control" placeholder="Weight"
                  formControlName="weight">
           <div class="input-group-append">
-            <select (change)="onWeightTypeChanged($event)" class="form-control bg-info text-light" formControlName="weightType">
+            <select (ngModelChange)="onWeightTypeChanged($event)" [ngModel]="selectedWeight"
+                    class="form-control bg-info text-light" formControlName="weightType">
               <option value="kg" [selected]=[0]>kg</option>
               <option value="lbs">lbs</option>
             </select>
@@ -29,7 +30,8 @@
           <input type="number" class="form-control" placeholder="Height"
                  formControlName="height">
           <div class="input-group-append">
-            <select (change)="onHeightTypeChanged($event)" class="form-control bg-info text-light" formControlName="heightType">
+            <select (ngModelChange)="onHeightTypeChanged($event)" [ngModel]="selectedHeight"
+                    class="form-control bg-info text-light" formControlName="heightType">
               <option value="cm" [selected]=[0]>cm</option>
               <option value="inch">in</option>
             </select>
