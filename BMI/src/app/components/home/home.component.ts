@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../environments/environment";
 
@@ -7,7 +7,7 @@ import {environment} from "../../../environments/environment";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   //app last updated on & version, go & update on environment.ts
   lastUpdatedOn = environment.lastUpdatedOn;
@@ -28,29 +28,22 @@ export class HomeComponent {
   BmiUnitInImperial = "lbs/in"
   bmiPrefix = "BMI = ";
   weightSuggestion = "";
-  // convertHeight: number | undefined;
-  //for ng model
-  selectedWeight = 'kg';
-  selectedHeight = 'cm';
 
   constructor() {
+
+  }
+
+  ngOnInit() {
+
   }
 
   // form init and validation
   bmiForm = new UntypedFormGroup({
     weight: new UntypedFormControl('', Validators.required),
     height: new UntypedFormControl('', Validators.required),
-    weightType: new UntypedFormControl('', Validators.required),
-    heightType: new UntypedFormControl('', Validators.required),
+    weightType: new UntypedFormControl('kg'),
+    heightType: new UntypedFormControl('cm')
   });
-
-  // toggleMetricForm() {
-  //   this.showImperialForm = false;
-  // }
-  //
-  // toggleImperialForm() {
-  //   this.showImperialForm = true;
-  // }
 
   computeBMI() {
     // this.onWeightTypeChanged(e);
@@ -60,22 +53,19 @@ export class HomeComponent {
 
       //  formula for calculating BMI (with kg and m)
       this.BMI = this.bmiForm.value.weight / Math.pow(this.finalHeight, 2);
-    }
-    else if (this.bmiForm.value.weightType == "kg" && this.bmiForm.value.heightType == "inch") {
+    } else if (this.bmiForm.value.weightType == "kg" && this.bmiForm.value.heightType == "inch") {
       // converting input height from inch to m
       this.finalHeight = this.bmiForm.value.height * 0.0254;
 
       //  formula for calculating BMI (with kg and m)
       this.BMI = this.bmiForm.value.weight / Math.pow(this.finalHeight, 2);
-    }
-    else if (this.bmiForm.value.weightType == "lbs" && this.bmiForm.value.heightType == "cm") {
+    } else if (this.bmiForm.value.weightType == "lbs" && this.bmiForm.value.heightType == "cm") {
       // converting input height from cm to inch
       this.finalHeight = this.bmiForm.value.height / 2.54;
 
       //  formula for calculating BMI (with lbs and inch)
       this.BMI = (this.bmiForm.value.weight / Math.pow(this.finalHeight, 2)) * 703;
-    }
-    else if (this.bmiForm.value.weightType == "lbs" && this.bmiForm.value.heightType == "inch") {
+    } else if (this.bmiForm.value.weightType == "lbs" && this.bmiForm.value.heightType == "inch") {
 
       //  formula for calculating BMI (with lbs and inch)
       this.BMI = (this.bmiForm.value.weight / Math.pow(this.bmiForm.value.height, 2)) * 703;
@@ -87,58 +77,63 @@ export class HomeComponent {
 
   // function to suggest weight range for healthy bmi
   suggestNormalWeight(): void {
+    // section for input weight in kg
+    if (this.bmiForm.value.weightType == "kg") {
+      this.minNormalWeight = Math.round(18.5 * Math.pow(this.finalHeight, 2));
+      this.maxNormalWeight = Math.round(24.9 * Math.pow(this.finalHeight, 2));
 
-    this.minNormalWeight = Math.round(18.5 * Math.pow(this.finalHeight, 2));
-    this.maxNormalWeight = Math.round(24.9 * Math.pow(this.finalHeight, 2));
-    if (this.BMI < 18.5) {
-      this.differenceInMinWeight = Math.round(this.minNormalWeight - this.bmiForm.value.weight);
+      if (this.BMI < 18.5) {
+        this.differenceInMinWeight = Math.round(this.minNormalWeight - this.bmiForm.value.weight + 1);
 
-      this.differenceInMaxWeight = Math.round(this.maxNormalWeight - this.bmiForm.value.weight);
+        this.differenceInMaxWeight = Math.round(this.maxNormalWeight - this.bmiForm.value.weight + 1);
 
-      this.normalWeight = "Gain weight by " + this.differenceInMinWeight + " Kg"
-        + "  to " + this.differenceInMaxWeight + " Kg.";
-    } else if (this.BMI > 24.9) {
-      this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
+        this.normalWeight = "Gain weight by " + this.differenceInMinWeight + " Kg"
+          + "  to " + this.differenceInMaxWeight + " Kg.";
+      } else if (this.BMI > 24.9) {
+        this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
 
-      this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
+        this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
 
-      this.normalWeight = "Lose your weight by " + this.differenceInMaxWeight + " Kg"
-        + "  to " + this.differenceInMinWeight + " Kg.";
-    } else {
-      this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
+        this.normalWeight = "Lose weight by " + this.differenceInMaxWeight + " Kg"
+          + "  to " + this.differenceInMinWeight + " Kg.";
+      } else {
+        this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
 
-      this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
+        this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
 
-      this.normalWeight = "Maintain your weight between " + this.minNormalWeight + " Kg"
-        + "  to " + this.maxNormalWeight + " Kg.";
+        this.normalWeight = "Maintain weight between " + this.minNormalWeight + " Kg"
+          + "  to " + this.maxNormalWeight + " Kg.";
+      }
     }
+    // section for input weight in lbs
+    if (this.bmiForm.value.weightType == "lbs") {
+      this.minNormalWeight = Math.round(18.5 * Math.pow(this.bmiForm.value.height, 2) / 703);
+      this.maxNormalWeight = Math.round(24.9 * Math.pow(this.bmiForm.value.height, 2) / 703);
 
-    this.minNormalWeight = Math.round(18.5 * Math.pow(this.bmiForm.value.height, 2) / 703);
-    this.maxNormalWeight = Math.round(24.9 * Math.pow(this.bmiForm.value.height, 2) / 703);
-    if (this.BMI < 18.5) {
-      this.differenceInMinWeight = Math.round(this.minNormalWeight - this.bmiForm.value.weight);
+      if (this.BMI < 18.5) {
+        this.differenceInMinWeight = Math.round(this.minNormalWeight - this.bmiForm.value.weight + 1);
 
-      this.differenceInMaxWeight = Math.round(this.maxNormalWeight - this.bmiForm.value.weight);
+        this.differenceInMaxWeight = Math.round(this.maxNormalWeight - this.bmiForm.value.weight + 1);
 
-      this.normalWeight = "Gain weight by " + this.differenceInMinWeight + " lbs"
-        + "  to " + this.differenceInMaxWeight + " lbs.";
-    } else if (this.BMI > 24.9) {
-      this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
+        this.normalWeight = "Gain weight by " + this.differenceInMinWeight + " lbs"
+          + "  to " + this.differenceInMaxWeight + " lbs.";
+      } else if (this.BMI > 24.9) {
+        this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
 
-      this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
+        this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
 
-      this.normalWeight = "Lose your weight by " + this.differenceInMaxWeight + " lbs"
-        + "  to " + this.differenceInMinWeight + " lbs.";
-    } else {
-      this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
+        this.normalWeight = "Lose weight by " + this.differenceInMaxWeight + " lbs"
+          + "  to " + this.differenceInMinWeight + " lbs.";
+      } else {
+        this.differenceInMinWeight = Math.round(this.bmiForm.value.weight - this.minNormalWeight);
 
-      this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
+        this.differenceInMaxWeight = Math.round(this.bmiForm.value.weight - this.maxNormalWeight);
 
-      this.normalWeight = "Maintain your weight between " + this.minNormalWeight + " lbs"
-        + "  to " + this.maxNormalWeight + " lbs.";
+        this.normalWeight = "Maintain weight between " + this.minNormalWeight + " lbs"
+          + "  to " + this.maxNormalWeight + " lbs.";
+      }
     }
   }
-
 
   // this will show 4 respective categories
   showBmiCategories(): void {
@@ -158,41 +153,71 @@ export class HomeComponent {
 
   // this shows weight suggestions for achieving healthy bmi
   showSuggestions(): void {
-
-    if (this.BMI >= 18.5 && this.BMI <= 24.9) {
-      this.weightSuggestion = "Healthy BMI range- " +
-        this.minNormalWeight + " Kg to " + this.maxNormalWeight + " Kg " +
-        " for " + this.bmiForm.value.height + " cm height."
-    } else {
-      this.weightSuggestion = "Healthy BMI range- " +
-        this.minNormalWeight + " Kg to " + this.maxNormalWeight + " Kg " +
-        " for " + this.bmiForm.value.height + " cm height."
+    // section for input weight in kg
+    if (this.bmiForm.value.weightType == "kg" && this.bmiForm.value.heightType == "cm") {
+      if (this.BMI >= 18.5 && this.BMI <= 24.9) {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " Kg to " + this.maxNormalWeight + " Kg " +
+          " for " + this.bmiForm.value.height + " cm height."
+      } else {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " Kg to " + this.maxNormalWeight + " Kg " +
+          " for " + this.bmiForm.value.height + " cm height."
+      }
+    } else if (this.bmiForm.value.weightType == "kg" && this.bmiForm.value.heightType == "inch") {
+      if (this.BMI >= 18.5 && this.BMI <= 24.9) {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " Kg to " + this.maxNormalWeight + " Kg " +
+          " for " + this.bmiForm.value.height + " inch height."
+      } else {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " Kg to " + this.maxNormalWeight + " Kg " +
+          " for " + this.bmiForm.value.height + " inch height."
+      }
     }
-
-    if (this.BMI >= 18.5 && this.BMI <= 24.9) {
-      this.weightSuggestion = "Healthy BMI range- " +
-        this.minNormalWeight + " lbs to " + this.maxNormalWeight + " lbs " +
-        " for " + this.bmiForm.value.height + " inch height."
-    } else {
-      this.weightSuggestion = "Healthy BMI range- " +
-        this.minNormalWeight + " lbs to " + this.maxNormalWeight + " lbs " +
-        " for " + this.bmiForm.value.height + " inch height."
+    // section for input weight in lbs
+    if (this.bmiForm.value.weightType == "lbs" && this.bmiForm.value.heightType == "cm") {
+      if (this.BMI >= 18.5 && this.BMI <= 24.9) {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " lbs to " + this.maxNormalWeight + " lbs " +
+          " for " + this.bmiForm.value.height + " cm height."
+      } else {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " lbs to " + this.maxNormalWeight + " lbs " +
+          " for " + this.bmiForm.value.height + " cm height."
+      }
+    } else if (this.bmiForm.value.weightType == "lbs" && this.bmiForm.value.heightType == "inch") {
+      if (this.BMI >= 18.5 && this.BMI <= 24.9) {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " lbs to " + this.maxNormalWeight + " lbs " +
+          " for " + this.bmiForm.value.height + " inch height."
+      } else {
+        this.weightSuggestion = "Healthy BMI range- " +
+          this.minNormalWeight + " lbs to " + this.maxNormalWeight + " lbs " +
+          " for " + this.bmiForm.value.height + " inch height."
+      }
     }
   }
 
   // we can also use click event on the button x (close)
   resetForm(): void {
-    this.bmiForm.reset();
+    // on reset form units (kg/cm etc) were also getting reset so did this
+    this.bmiForm.reset({
+      weight: '',
+      height: '',
+      weightType: 'kg',
+      heightType: 'cm'
+    });
   }
 
   onWeightTypeChanged(e: any) {
+    console.log(e.target.value);
   }
 
   onHeightTypeChanged(e: any) {
+    console.log(e.target.value);
   }
 }
 
-function e(e: any) {
-  throw new Error('Function not implemented.');
-}
+
 
