@@ -1,8 +1,8 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const lastUpdatedOn = 'Aug 07, 2022';
-const version = 'V-1.1';
+const lastUpdatedOn = 'Aug 17, 2022';
+const version = 'V-1.2';
 
 export const environment = {
   production: false,

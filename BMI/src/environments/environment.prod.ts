@@ -1,5 +1,5 @@
-const lastUpdatedOn = 'Aug 07, 2022';
-const version = 'V-1.1';
+const lastUpdatedOn = 'Aug 17, 2022';
+const version = 'V-1.2';
 
 
 export const environment = {
